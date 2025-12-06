@@ -1,47 +1,348 @@
-# Getting Started with Create React App
+Dynamic Risk Assessment Form Builder
+A production-ready React 18+ TypeScript application for building dynamic, accessible risk assessment forms with real-time validation, conditional logic, and risk score calculation.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🎯 Features
+Dynamic Form Rendering - JSON-driven form configuration
 
-## Available Scripts
+6 Field Types - Text, Number, Select, Checkbox, File (PDF), Date
 
-In the project directory, you can run:
+Conditional Logic - Show/hide fields based on previous answers
 
-### `npm start`
+Real-time Risk Scoring - Weighted calculation with section breakdown
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Auto-save - Automatic draft saving every 30 seconds
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Full Accessibility - WCAG 2.1 AA compliant, keyboard navigation
 
-### `npm test`
+Responsive Design - Mobile, tablet, desktop optimized
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Type Safety - Full TypeScript coverage
 
-### `npm run build`
+Comprehensive Testing - Jest + React Testing Library
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+📋 Architecture
+text
+FormBuilder (Main Component)
+├── FormHeader (Title, Last Saved)
+├── RiskScoreboard (Real-time Risk Display)
+├── FormSection[]
+│   ├── FormField[]
+│   │   ├── TextField
+│   │   ├── NumberField
+│   │   ├── SelectField
+│   │   ├── CheckboxField
+│   │   ├── FileField
+│   │   └── DateField
+│   └── Validation Status
+└── FormActions (Save/Submit)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Custom Hooks:
+- useFormState: State management
+- useRiskCalculation: Risk scoring
+- useConditionalLogic: Field visibility
+- useAutoSave: Draft persistence
+- useValidation: Form validation
+🚀 Quick Start
+Prerequisites
+Node.js 16+
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+npm or yarn
 
-### `npm run eject`
+Installation
+bash
+# Clone the repository
+git clone https://github.com/yourusername/risk-assessment-form-builder.git
+cd risk-assessment-form-builder
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Install dependencies
+npm install
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Start development server
+npm start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Run tests
+npm test
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Build for production
+npm run build
+Environment Variables
+Create .env file:
 
-## Learn More
+text
+REACT_APP_AUTO_SAVE_INTERVAL=30000
+REACT_APP_MAX_FILE_SIZE=10485760
+📁 Project Structure
+text
+src/
+├── components/
+│   ├── FormBuilder.tsx           # Main form component
+│   ├── FormSection.tsx           # Section wrapper
+│   ├── FormField.tsx             # Field wrapper
+│   ├── RiskScoreboard.tsx        # Risk display
+│   ├── FormHeader.tsx            # Header component
+│   ├── FormActions.tsx           # Action buttons
+│   └── fields/                   # Field type components
+│       ├── TextField.tsx
+│       ├── NumberField.tsx
+│       ├── SelectField.tsx
+│       ├── CheckboxField.tsx
+│       ├── FileField.tsx
+│       └── DateField.tsx
+├── hooks/                        # Custom React hooks
+│   ├── useFormState.ts
+│   ├── useRiskCalculation.ts
+│   ├── useConditionalLogic.ts
+│   ├── useAutoSave.ts
+│   └── useValidation.ts
+├── utils/                        # Utility functions
+│   ├── validation.ts
+│   ├── riskCalculation.ts
+│   ├── fileValidator.ts
+│   ├── localStorage.ts
+│   └── constants.ts
+├── types/
+│   └── form.types.ts             # TypeScript types
+├── config/
+│   └── formConfig.json           # Example form config
+├── styles/
+│   ├── theme.ts                  # MUI theme
+│   └── globals.css
+├── tests/                        # Unit tests
+├── App.tsx                       # Main app
+└── index.tsx                     # Entry point
+💡 Key Design Decisions
+1. Component Architecture
+Single Responsibility: Each field component handles one type only
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Composition: FormField wrapper abstracts common logic
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-# risk-assessment-form-builder
+Reusability: Custom hooks enable code sharing across components
+
+2. State Management
+React Hook Form: Minimal boilerplate, excellent performance
+
+Custom Hooks: Separate concerns (form state, validation, risk)
+
+Context: Optional for large apps (not included in basic version)
+
+3. Conditional Logic
+Declarative: Conditions defined in JSON config
+
+Efficient: Only visible fields are validated
+
+Smooth: CSS animations for field transitions
+
+4. Risk Calculation
+Weighted Algorithm: Each question has a risk weight (1-5)
+
+Real-time Updates: Calculated on every field change
+
+Section Breakdown: Risk scored by category
+
+Visual Feedback: Color-coded risk levels
+
+5. Auto-save Strategy
+30-second Interval: Balance between data loss prevention and performance
+
+localStorage: Works offline, no backend required
+
+Draft Management: Multiple draft versions supported
+
+Last Saved: User-visible timestamp
+
+6. Accessibility
+Semantic HTML: Proper use of form elements
+
+ARIA Labels: Screen reader support
+
+Keyboard Navigation: Tab, Enter, Escape support
+
+Focus Management: Visible focus indicators
+
+Error Messages: Associated with form fields
+
+📝 Form Configuration
+Example JSON configuration:
+
+json
+{
+  "sections": [
+    {
+      "id": "compliance",
+      "title": "Compliance Assessment",
+      "description": "Evaluate your compliance posture",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "select",
+          "label": "Do you have SOC2 certification?",
+          "description": "ISO/IEC 27001 or SOC2 Type II",
+          "options": ["Yes", "No", "In Progress"],
+          "required": true,
+          "riskWeight": 4,
+          "conditional": null
+        },
+        {
+          "id": "q2",
+          "type": "file",
+          "label": "Upload compliance certificate",
+          "accept": ".pdf",
+          "maxSize": 10,
+          "required": false,
+          "riskWeight": 5,
+          "conditional": {
+            "questionId": "q1",
+            "answer": "Yes"
+          }
+        }
+      ]
+    }
+  ]
+}
+🧪 Testing
+bash
+# Run all tests
+npm test
+
+# Run with coverage
+npm test -- --coverage
+
+# Run specific test file
+npm test FormBuilder.test.tsx
+
+# Watch mode
+npm test -- --watch
+Test Coverage
+Components: Rendering, user interactions, conditional rendering
+
+Hooks: State management, calculations, side effects
+
+Utilities: Validation, risk scoring, file validation
+
+Integration: Form submission, auto-save, error handling
+
+🎨 Customization
+Theme Customization
+Edit src/styles/theme.ts:
+
+typescript
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    // ... custom colors
+  },
+});
+Adding New Field Type
+Create component in src/components/fields/CustomField.tsx
+
+Add type to FormFieldType in src/types/form.types.ts
+
+Update FormField.tsx to render new type
+
+Add validation rules if needed
+
+🔒 Security Considerations
+File Upload: Only PDF files accepted, size limited to 10MB
+
+Input Validation: All inputs sanitized before processing
+
+XSS Prevention: React's built-in escaping used throughout
+
+Type Safety: TypeScript prevents many runtime errors
+
+🚦 Performance Optimization
+Memoization: Components memoized to prevent unnecessary re-renders
+
+useCallback: Event handlers memoized
+
+useMemo: Expensive calculations cached
+
+Code Splitting: Dynamic imports for large components
+
+Lazy Loading: Components loaded on demand
+
+📊 Risk Calculation Algorithm
+text
+Total Risk Score = Σ (Answer Weight × Question Weight) / Total Possible Weight
+
+Risk Levels:
+- 0-25: Low (Green)
+- 26-50: Medium (Yellow)
+- 51-75: High (Orange)
+- 76-100: Critical (Red)
+
+Section Score = Sum of weighted answers in section
+Overall Score = Average of all section scores
+🤝 Contributing
+Fork the repository
+
+Create a feature branch (git checkout -b feature/amazing-feature)
+
+Commit changes (git commit -m 'Add amazing feature')
+
+Push to branch (git push origin feature/amazing-feature)
+
+Open a Pull Request
+
+Code Standards
+Use TypeScript strictly
+
+Follow ESLint configuration
+
+Write tests for new features
+
+Update documentation
+
+Use descriptive commit messages
+
+📚 Additional Resources
+React Hook Form Docs
+
+Material-UI Documentation
+
+TypeScript Handbook
+
+WCAG 2.1 Guidelines
+
+📄 License
+MIT License - see LICENSE file for details
+
+👤 Author
+Developed as a comprehensive UI Developer coding exercise solution.
+
+🐛 Troubleshooting
+Form not persisting
+Check browser localStorage is enabled
+
+Verify auto-save interval in environment variables
+
+Check browser console for errors
+
+File upload not working
+Ensure file is PDF format
+
+Verify file size is under 10MB
+
+Check CORS settings if using backend
+
+Validation not triggering
+Ensure field is marked as required in config
+
+Check conditional logic isn't hiding the field
+
+Verify validation rules in src/utils/validation.ts
+
+📞 Support
+For issues or questions:
+
+Check existing GitHub issues
+
+Create a new issue with detailed description
+
+Include error messages and reproduction steps
+
+Version: 1.0.0
+Last Updated: December 2024
+Maintenance: Active
